@@ -1,6 +1,7 @@
 """
 Test async playlist
 """
+import pytest
 import pytest_asyncio
 
 from sclib.asyncio import SoundcloudAPI, Playlist
@@ -15,9 +16,9 @@ async def playlist_fixture():
     return await SoundcloudAPI().resolve(PLAYLIST_URL)
 
 
-
-def test_playlist_size(test_playlist: Playlist):
+@pytest.mark.asyncio
+async def test_playlist_size(test_playlist: Playlist):
     """ Test async playlist size """
     assert len(test_playlist) > 0
-    test_playlist.clean_attributes()
+    await test_playlist.async_clean_attributes()
     assert len(test_playlist) == len(test_playlist.tracks)

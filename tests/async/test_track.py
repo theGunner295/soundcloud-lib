@@ -1,6 +1,7 @@
 """ Test async track """
 import os
 from io import BytesIO
+from pathlib import Path
 
 import mutagen
 import pytest
@@ -12,6 +13,7 @@ from sclib.asyncio import SoundcloudAPI, Track
 TEST_TRACK_URL = 'https://soundcloud.com/mt-marcy/cold-nights'
 TEST_TRACK_TITLE = 'cold nights'
 TEST_TRACK_ARTIST = 'mt. marcy'
+PATH = Path.cwd()
 
 
 @pytest.fixture(scope='session', name='async_api')
@@ -44,7 +46,7 @@ async def test_track_has_correct_attributes(test_track:Track):
 async def test_track_accepts_correct_file_objects(async_api):
     """ test correct file objs """
     track = await async_api.resolve(TEST_TRACK_URL)
-    filename = os.path.realpath('/tmp/faksjhflaksjfhlaksjfdhlkas.mp3')
+    filename = str(PATH) + '\\faksjhflaksjfhlaksjfdhlkas.mp3'
     with open(filename, 'wb+') as mp3:
         await track.write_mp3_to(mp3)
     os.remove(filename)
