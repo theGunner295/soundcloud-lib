@@ -341,7 +341,7 @@ class Playlist:
         if self.ready:
             return
         self.ready = True
-        track_objects = []  # type: [Track] # all completed track objects
+        track_objects = []  # type: Track # all completed track objects
         incomplete_track_ids = []  # tracks that do not have metadata
 
         while self.tracks and 'title' in self.tracks[0]:  # remove completed track objects

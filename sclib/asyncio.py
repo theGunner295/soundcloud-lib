@@ -89,7 +89,7 @@ class SoundcloudAPI(sync.SoundcloudAPI):
 
         if obj['kind'] == 'playlist':
             playlist = Playlist(obj=obj, client=self)
-            await playlist.clean_attributes()
+            await playlist.asyncclean_attributes()
             return playlist
 
     async def get_tracks(self, *track_ids):  # pylint: disable=invalid-overridden-method
@@ -158,16 +158,17 @@ class Track(sync.Track):
 
 
 class Playlist(sync.Playlist):
-    """ Playlist """
+    """ Asynchronous playlist object """
 
     RESOLVE_THRESHOLD = 100
 
-    async def clean_attributes(self): # pylint: disable=invalid-overridden-method
+    async def asyncclean_attributes(self): # pylint: disable=invalid-overridden-method
+        """ Async clean_attributes """
         if self.ready:
             return
         self.ready = True
 
-        track_objects = []  # type: [Track] # all completed track objects
+        track_objects = []  # type: Track # all completed track objects
         incomplete_track_ids = []   # tracks that do not have metadata
 
         while self.tracks and 'title' in self.tracks[0]:       # remove completed track objects
@@ -189,7 +190,7 @@ class Playlist(sync.Playlist):
         return int(self.track_count)
 
     async def __aiter__(self):
-        await self.clean_attributes()
+        await self.asyncclean_attributes()
         for track in self.tracks:
             yield track
 
