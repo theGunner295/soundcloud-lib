@@ -359,6 +359,6 @@ class Playlist:
         return int(self.track_count)
 
     def __iter__(self):
-        await self.clean_attributes()
+        self.clean_attributes()
         for track in self.tracks:
             yield track
