@@ -68,7 +68,7 @@ async def embed_artwork(audio:mutagen.File, artwork_url):
 class SoundcloudAPI(sync.SoundcloudAPI):
     """ Asynchronous Soundcloud API Client """
 
-    async def get_credentials(self):  # pylint: disable=invalid-overridden-method)
+    async def get_credentials(self):  # pylint: disable=invalid-overridden-method
         """ Find api credentials  """
         self.client_id = await fetch_soundcloud_client_id()
         if self.client_id is None:
@@ -112,7 +112,7 @@ class SoundcloudAPI(sync.SoundcloudAPI):
 class Track(sync.Track):
     """ Asynchronous track object """
 
-    async def write_mp3_to(self, file):  # pylint: disable=invalid-overridden-method)
+    async def write_mp3_to(self, file):  # pylint: disable=invalid-overridden-method
         """ Write the mp3 representation of this track to a file object """
         try:
             file.seek(0)
